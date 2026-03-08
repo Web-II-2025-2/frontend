@@ -1,7 +1,9 @@
-import './App.css'
+import Demo from './components/common/navbar'
 
 function App() {
-  return null
+  return (
+    <Demo></Demo>
+  )
 }
 
 export default App
