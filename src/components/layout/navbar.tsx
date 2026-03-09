@@ -10,7 +10,15 @@ const NAV_LINKS = [
 
 const NavBar = () => {
   return (
-    <Flex justify="space-between" align="center" w="full" px={16} mt={8}>
+    <Flex
+      position="absolute"
+      justify="space-between"
+      align="center"
+      w="full"
+      zIndex="10"
+      px={16}
+      mt={8}
+    >
       <HStack>
         <Box></Box>
         <Text textStyle="logo">Hotel</Text>

@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react"
+import { Box, HStack } from "@chakra-ui/react"
 import hotelVideo from "@/assets/videos/hotel.mp4"
 
 const HeroVideo = () => {
@@ -18,6 +18,10 @@ const HeroVideo = () => {
       >
         <source src={hotelVideo} type="video/mp4" />
       </video>
+
+      <HStack>
+        LOUCURAS
+      </HStack>
     </Box>
   )
 }
