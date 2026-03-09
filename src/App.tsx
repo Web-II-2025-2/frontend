@@ -1,4 +1,4 @@
-import Demo from './components/common/navbar'
+import Demo from './components/layout/navbar'
 
 function App() {
   return (
