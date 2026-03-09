@@ -17,14 +17,16 @@ const config = defineConfig({
         value: {
           fontStyle: "italic",
           fontFamily: "heading",
-          fontSize: "3xl",
+          fontSize: "7xl",
+          lineHeight: "6vh",
+          fontWeight: "normal",
         },
       },
       navBarItems: {
         value: {
           fontFamily: "body",
-          fontSize: "md",
-          fontWeight: "normal",
+          fontSize: "lg",
+          fontWeight: "bold",
         }
       }
       }

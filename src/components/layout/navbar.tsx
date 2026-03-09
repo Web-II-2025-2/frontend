@@ -21,7 +21,6 @@ const NavBar = () => {
     >
       <HStack>
         <Box></Box>
-        <Text textStyle="logo">Hotel</Text>
       </HStack>
       <HStack gap={20}>
         {NAV_LINKS.map((link) => (

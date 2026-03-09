@@ -1,11 +1,11 @@
-import HeroVideo from "./components/layout/backgroundVid"
+import HeroSection from "./components/layout/heroSection"
 import NavBar from "./components/layout/navbar"
 
 function App() {
   return (
     <>
       <NavBar />
-      <HeroVideo />
+      <HeroSection />
     </>
   )
 }
