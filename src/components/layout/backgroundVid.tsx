@@ -1,7 +1,28 @@
 import { Box } from "@chakra-ui/react"
 import hotelVideo from "@/assets/videos/hotel.mp4"
+import { useEffect, useState } from "react"
 
 const HeroVideo = () => {
+  const [zoom, setZoom] = useState(1)
+
+  useEffect(() => {
+    const handleWheel = (e: any) => {
+      if (e.ctrlKey) {
+        e.PreventDefault()
+
+        setZoom((prev) => {
+          const next = prev - e.deltaY * 0.001
+          return Math.min(Math.max(next, 1), 3)
+        })
+      }
+    }
+    window.addEventListener("wheel", handleWheel, { passive: false })
+
+    return () => {
+      window.addEventListener("wheel", handleWheel)
+    }
+  })
+
   return (
     <Box position="absolute" height="100vh" overflow="hidden" zIndex="0">
       <video
@@ -12,7 +33,9 @@ const HeroVideo = () => {
         style={{
           width: "100%",
           height: "100%",
-          objectFit: "cover"
+          objectFit: "cover",
+          transform: `scale(${zoom})`,
+          transition: "transform 0.1s linear"
         }}
       >
         <source src={hotelVideo} type="video/mp4" />

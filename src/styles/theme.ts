@@ -17,7 +17,7 @@ const config = defineConfig({
         value: {
           fontStyle: "italic",
           fontFamily: "heading",
-          fontSize: "7xl",
+          fontSize: "6xl",
           lineHeight: "6vh",
           fontWeight: "normal",
         },
