@@ -25,8 +25,14 @@ const config = defineConfig({
       navBarItems: {
         value: {
           fontFamily: "body",
-          fontSize: "lg",
+          fontSize: "xl",
           fontWeight: "bold",
+        }
+      },
+      defaultItems: {
+        value: {
+          fontFamily: "body",
+          fontSize: "xl",
         }
       }
       }

@@ -1,4 +1,4 @@
-import { Flex, Box, Text, Link, HStack } from "@chakra-ui/react";
+import { Flex, Box, Link, HStack } from "@chakra-ui/react";
 
 const NAV_LINKS = [
   { name: "Home", href: "#home" },
