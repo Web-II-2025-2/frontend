@@ -28,7 +28,7 @@ export function LoginPage() {
         badge="Reservas disponíveis"
         title="Sua estadia começa"
         italic="aqui."
-        subtitle="Acesse sua conta para gerenciar reservas, solicitar serviços e viver a experiência Aurora com exclusividade."
+        subtitle="Acesse sua conta para gerenciar reservas, solicitar serviços e viver a experiência Hotel UFCG com exclusividade."
         perks={[
           { icon: "🛎", text: "Check-in e check-out online" },
           { icon: "🍽", text: "Serviço de quarto a qualquer hora" },

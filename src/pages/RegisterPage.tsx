@@ -120,22 +120,14 @@ export function RegisterPage() {
                     onChange={(e: any) => setCpf(maskCPF(e.target.value))}
                     maxLength={14}
                   />
-                  <div className="register-page-form-grid">
+                  <div>
                     <InputField
                       label="Telefone"
                       icon="📱"
                       placeholder="(11) 9 0000-0000"
                       value={phone}
                       onChange={(e: any) => setPhone(maskPhone(e.target.value))}
-                      maxLength={16}
-                    />
-                    <InputField
-                      label="Data de Nasc."
-                      icon="🎂"
-                      placeholder="DD/MM/AAAA"
-                      value={date}
-                      onChange={(e: any) => setDate(maskDate(e.target.value))}
-                      maxLength={10}
+                      maxLength={17}
                     />
                   </div>
                   <div className="register-page-button-group">
@@ -198,11 +190,11 @@ export function RegisterPage() {
                   {[
                     {
                       id: "terms", state: terms, set: setTerms,
-                      text: <>Li e aceito os <a href="#" style={{ color: COLORS.gold, textDecoration: "none", fontWeight: 500 }}>Termos de Uso</a> e a <a href="#" style={{ color: COLORS.gold, textDecoration: "none", fontWeight: 500 }}>Política de Privacidade</a> do Hotel Aurora.</>
+                      text: <>Li e aceito os <a href="#" style={{ color: COLORS.gold, textDecoration: "none", fontWeight: 500 }}>Termos de Uso</a> e a <a href="#" style={{ color: COLORS.gold, textDecoration: "none", fontWeight: 500 }}>Política de Privacidade</a> do Hotel UFCG.</>
                     },
                     {
                       id: "news", state: news, set: setNews,
-                      text: "Quero receber ofertas exclusivas e novidades do Hotel Aurora por e-mail."
+                      text: "Quero receber ofertas exclusivas e novidades do Hotel UFCG por e-mail."
                     }
                   ].map(({ id, state, set, text }) => (
                     <div key={id} className="register-page-checkbox" onClick={() => set(v => !v)}>
@@ -253,7 +245,7 @@ export function RegisterPage() {
               </div>
               <h3 className="register-page-success-title">Conta criada com sucesso!</h3>
               <p className="register-page-success-text">
-                Bem-vindo ao programa Aurora Gold. Um e-mail de confirmação foi enviado para você.
+                Bem-vindo ao programa Hotel UFCG. Aprecie sua estádia.  
               </p>
               <button
                 className="register-page-success-button"
