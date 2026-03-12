@@ -1,30 +1,13 @@
-import { Box } from "@chakra-ui/react"
-import hotelVideo from "@/assets/videos/hotel.mp4"
-import { useEffect, useState } from "react"
+import { Box } from "@chakra-ui/react";
+import hotelVideo from "@/assets/videos/hotel.mp4";
 
-const HeroVideo = () => {
-  const [zoom, setZoom] = useState(1)
+interface HeroVideoProps {
+  zoom: number;
+}
 
-  useEffect(() => {
-    const handleWheel = (e: any) => {
-      if (e.ctrlKey) {
-        e.preventDefault()
-
-        setZoom((prev) => {
-          const next = prev - e.deltaY * 0.001
-          return Math.min(Math.max(next, 1), 3)
-        })
-      }
-    }
-    window.addEventListener("wheel", handleWheel, { passive: false })
-
-    return () => {
-      window.removeEventListener("wheel", handleWheel)
-    }
-  }, [])
-
+const HeroVideo = ({ zoom }: HeroVideoProps) => {
   return (
-    <Box position="absolute" height="100vh" overflow="hidden" zIndex="0">
+    <Box position="absolute" height="100vh" overflow="hidden" zIndex="0" width="100%">
       <video
         autoPlay
         muted
@@ -35,13 +18,13 @@ const HeroVideo = () => {
           height: "100%",
           objectFit: "cover",
           transform: `scale(${zoom})`,
-          transition: "transform 0.1s linear"
+          transition: "transform 0.08s linear",
         }}
       >
         <source src={hotelVideo} type="video/mp4" />
       </video>
     </Box>
-  )
-}
+  );
+};
 
-export default HeroVideo
+export default HeroVideo;

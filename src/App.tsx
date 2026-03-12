@@ -6,6 +6,10 @@ function App() {
     <>
       <NavBar />
       <HeroSection />
+
+      <div style={{ height: "200vh", background: "black", color: "white" }}>
+        <h1>teste scroll</h1>
+      </div>
     </>
   )
 }
