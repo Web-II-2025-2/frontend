@@ -8,7 +8,7 @@ const HeroVideo = () => {
   useEffect(() => {
     const handleWheel = (e: any) => {
       if (e.ctrlKey) {
-        e.PreventDefault()
+        e.preventDefault()
 
         setZoom((prev) => {
           const next = prev - e.deltaY * 0.001
@@ -19,9 +19,9 @@ const HeroVideo = () => {
     window.addEventListener("wheel", handleWheel, { passive: false })
 
     return () => {
-      window.addEventListener("wheel", handleWheel)
+      window.removeEventListener("wheel", handleWheel)
     }
-  })
+  }, [])
 
   return (
     <Box position="absolute" height="100vh" overflow="hidden" zIndex="0">
