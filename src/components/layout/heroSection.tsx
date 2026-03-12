@@ -5,13 +5,13 @@ import { useEffect, useRef, useState } from "react";
 
 const ZOOM_START = 1.5;
 const ZOOM_END = 1.0;
-const ZOOM_SCROLL_DISTANCE = 300;
+const ZOOM_SCROLL_DISTANCE = 400;
 
 const HeroSection = () => {
   const { checkIn, checkOut } = getDefaultDates();
   const [zoom, setZoom] = useState(ZOOM_START);
-  const virtualScroll = useRef(0); 
-  const isLocked = useRef(true);   
+  const virtualScroll = useRef(0);
+  const isLocked = useRef(true);
 
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
@@ -20,7 +20,7 @@ const HeroSection = () => {
 
       virtualScroll.current = Math.min(
         virtualScroll.current + e.deltaY,
-        ZOOM_SCROLL_DISTANCE
+        ZOOM_SCROLL_DISTANCE,
       );
 
       virtualScroll.current = Math.max(virtualScroll.current, 0);
@@ -34,10 +34,20 @@ const HeroSection = () => {
       }
     };
 
+    const handlePageScroll = () => {
+      if (window.scrollY === 0) {
+        isLocked.current = true;
+        virtualScroll.current = 0;
+        setZoom(ZOOM_START);
+      }
+    };
+
     window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("scroll", handlePageScroll);
 
     return () => {
       window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("scroll", handlePageScroll);
     };
   }, []);
 
@@ -61,22 +71,48 @@ const HeroSection = () => {
 
       <Flex position="absolute" top="75%" right="100px" gap={10} zIndex={2}>
         <VStack align="center">
-          <Text fontSize="xs" fontWeight="bold"> CHECK-IN - CHECK-OUT </Text>
-          <Button size="xl" bg="transparent" color="white" border="1px solid" borderColor="whiteAlpha.700">
+          <Text fontSize="xs" fontWeight="bold">
+            {" "}
+            CHECK-IN - CHECK-OUT{" "}
+          </Text>
+          <Button
+            size="xl"
+            bg="transparent"
+            color="white"
+            border="1px solid"
+            borderColor="whiteAlpha.700"
+          >
             {formatDate(checkIn)} → {formatDate(checkOut)}
           </Button>
         </VStack>
 
         <VStack align="center">
-          <Text fontSize="xs" fontWeight="bold"> CONVIDADOS E QUARTO </Text>
-          <Button size="xl" bg="transparent" color="white" border="1px solid" borderColor="whiteAlpha.700">
+          <Text fontSize="xs" fontWeight="bold">
+            {" "}
+            CONVIDADOS E QUARTO{" "}
+          </Text>
+          <Button
+            size="xl"
+            bg="transparent"
+            color="white"
+            border="1px solid"
+            borderColor="whiteAlpha.700"
+          >
             2 adultos, suíte master
           </Button>
         </VStack>
 
         <VStack align="center">
-          <Text fontSize="xs" fontWeight="bold">PREÇO ESTIMADO</Text>
-          <Button size="xl" bg="transparent" color="white" border="1px solid" borderColor="whiteAlpha.700">
+          <Text fontSize="xs" fontWeight="bold">
+            PREÇO ESTIMADO
+          </Text>
+          <Button
+            size="xl"
+            bg="transparent"
+            color="white"
+            border="1px solid"
+            borderColor="whiteAlpha.700"
+          >
             Verificar preço
           </Button>
         </VStack>

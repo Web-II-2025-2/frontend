@@ -18,7 +18,7 @@ const HeroVideo = ({ zoom }: HeroVideoProps) => {
           height: "100%",
           objectFit: "cover",
           transform: `scale(${zoom})`,
-          transition: "transform 0.08s linear",
+          transition: "transform 1s ease-out",
         }}
       >
         <source src={hotelVideo} type="video/mp4" />
