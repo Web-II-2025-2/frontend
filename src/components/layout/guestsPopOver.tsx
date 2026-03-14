@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   Flex,
+  Grid,
   HStack,
   Popover,
   Portal,
@@ -157,7 +158,6 @@ export function GuestsPopover({ value, onChange }: GuestsPopoverProps) {
             >
               <GuestCounter
                 label="Adultos"
-                sublabel="13 anos ou mais"
                 value={value.adults}
                 onChange={(v) => set({ adults: v })}
                 min={1}
@@ -166,7 +166,6 @@ export function GuestsPopover({ value, onChange }: GuestsPopoverProps) {
               <Box borderTop="1px solid" borderColor="whiteAlpha.200" />
               <GuestCounter
                 label="Crianças"
-                sublabel="0 a 12 anos"
                 value={value.children}
                 onChange={(v) => set({ children: v })}
                 min={0}
@@ -188,10 +187,11 @@ export function GuestsPopover({ value, onChange }: GuestsPopoverProps) {
                   fontSize="xs"
                   mb={2}
                   fontWeight="semibold"
+                  textAlign="center"
                 >
                   TIPO DE QUARTO
                 </Text>
-                <Flex wrap="wrap" gap={2}>
+                <Grid gap={2} templateColumns="repeat(2, 1fr)" w="100%">
                   {ROOM_TYPES.map((type) => (
                     <Button
                       key={type}
@@ -214,7 +214,7 @@ export function GuestsPopover({ value, onChange }: GuestsPopoverProps) {
                       {type}
                     </Button>
                   ))}
-                </Flex>
+                </Grid>
               </Box>
             </Popover.Content>
           </Popover.Positioner>
