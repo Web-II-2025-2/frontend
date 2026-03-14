@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Box,
   Button,
@@ -125,7 +123,7 @@ export function GuestsPopover({ value, onChange }: GuestsPopoverProps) {
   return (
     <VStack align="center">
       <Text fontSize="xs" fontWeight="bold" letterSpacing="widest">
-        CONVIDADOS E QUARTO
+        CONVIDADO/QUARTO
       </Text>
       <Popover.Root positioning={{ placement: "top" }}>
         <Popover.Trigger asChild>

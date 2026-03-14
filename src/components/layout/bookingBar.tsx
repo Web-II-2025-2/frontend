@@ -1,5 +1,3 @@
-"use client";
-
 import { Button, Flex, Text, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 import type { DateRange } from "react-day-picker";
