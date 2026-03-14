@@ -5,49 +5,12 @@ import { DayPicker } from "react-day-picker";
 import type { DateRange } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { formatDate } from "@/utils/date";
+import "./day-picker.css";
 
 interface DateRangePickerProps {
   dateRange: DateRange | undefined;
   onChange: (range: DateRange | undefined) => void;
 }
-
-const DAY_PICKER_STYLES = `
-  .rdp {
-    --rdp-accent-color: rgba(255,255,255,0.9);
-    --rdp-background-color: rgba(255,255,255,0.1);
-    margin: 0;
-    padding: 16px;
-    color: white;
-  }
-  .rdp-day_selected,
-  .rdp-day_range_start,
-  .rdp-day_range_end {
-    background-color: white !important;
-    color: black !important;
-    font-weight: bold;
-  }
-  .rdp-day_range_middle {
-    background-color: rgba(255,255,255,0.15) !important;
-    color: white !important;
-  }
-  .rdp-button:hover:not([disabled]):not(.rdp-day_selected) {
-    background-color: rgba(255,255,255,0.15) !important;
-    color: white !important;
-  }
-  .rdp-nav_button { color: white !important; }
-  .rdp-caption_label {
-    color: white;
-    font-weight: 600;
-    text-transform: capitalize;
-  }
-  .rdp-head_cell {
-    color: rgba(255,255,255,0.5);
-    font-weight: 500;
-    font-size: 0.75rem;
-  }
-  .rdp-day { color: white; border-radius: 6px; }
-  .rdp-day_disabled { color: rgba(255,255,255,0.2) !important; }
-`;
 
 export function DateRangePicker({ dateRange, onChange }: DateRangePickerProps) {
   const today = new Date();
@@ -102,7 +65,6 @@ export function DateRangePicker({ dateRange, onChange }: DateRangePickerProps) {
               w="auto"
               maxW="none"
             >
-              <style>{DAY_PICKER_STYLES}</style>
               <DayPicker
                 mode="range"
                 selected={dateRange}
