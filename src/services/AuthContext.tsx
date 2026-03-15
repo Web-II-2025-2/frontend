@@ -11,7 +11,7 @@ interface User {
   role: RoleType;
 }
 
-interface MyJwtPayload extends JwtPayload {
+export interface MyJwtPayload extends JwtPayload {
   sub: string;
   role: RoleType;
 }
@@ -39,9 +39,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const fetchUserData = async (role: RoleType): Promise<User> => {
-    const endpoint = role === 'GUEST' ? '/api/guest' : '/api/employee';
+    const endpoint = role === 'GUEST' ? '/guests/profile' : '/employees/profile';
     
     const { data } = await api.get<User>(endpoint);
+    console.log("Dados do usuário obtidos:", data);
     return data;
   };
 
