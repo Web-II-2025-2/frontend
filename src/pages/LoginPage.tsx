@@ -1,21 +1,50 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../services/AuthContext";
+import type { MyJwtPayload } from "../services/AuthContext";
+import api from "../services/api";
 import { LeftPanel } from "../components/layout/LeftPanel";
 import { InputField } from "../components/common/InputField";
 import { Logo } from "../components/common/Logo";
-import { useNavigate } from "react-router-dom";
 import "./styles/loginPage.css";
+import { jwtDecode } from "jwt-decode";
 
 export function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  
   const [showPwd, setShowPwd] = useState(false);
   const [remember, setRemember] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+  const { login } = useAuth();
 
-  function handleLogin(e: any) {
+  async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => setLoading(false), 2200);
+
+    try {
+      const response = await api.post("/auth/login", { email, password });
+      const token = response.data;
+      await login(token);
+
+      const decoded = jwtDecode<MyJwtPayload>(token);
+
+      console.log("Token decodificado:", decoded);
+      if (decoded.role === 'GUEST') {
+        console.log("Redirecionando para dashboard de hóspede...");
+        navigate("/guest/dashboard");
+      } else {
+        navigate("/management/dashboard");
+      }
+            
+    } catch (error: any) {
+      console.error("Erro ao fazer login:", error);
+      alert(error.response?.data?.message || "Falha na autenticação. Verifique suas credenciais.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   function onGoRegister() {
@@ -36,7 +65,6 @@ export function LoginPage() {
         ]}
       />
       <div className="login-page-right-panel">
-
         <div className="login-page-decoration-top" />
         <div className="login-page-decoration-bottom" />
 
@@ -46,12 +74,20 @@ export function LoginPage() {
           <p className="login-page-subtitle">Acesse sua reserva ou conta de hóspede</p>
 
           <form onSubmit={handleLogin}>
-            <InputField label="E-mail" icon="✉️" placeholder="email@exemplo.com" />
+            <InputField 
+              label="E-mail" 
+              icon="✉️" 
+              placeholder="email@exemplo.com"
+              value={email}
+              onChange={(e: any) => setEmail(e.target.value)}
+            />
             <InputField
               label="Senha"
               icon="🔒"
               type={showPwd ? "text" : "password"}
               placeholder="••••••••"
+              value={password}
+              onChange={(e: any) => setPassword(e.target.value)}
               rightBtn={
                 <button
                   type="button"
@@ -78,7 +114,11 @@ export function LoginPage() {
               <span className="login-page-remember-text">Lembrar de mim</span>
             </div>
 
-            <button type="submit" className={`login-page-submit-btn ${loading ? "loading" : ""}`}>
+            <button 
+              type="submit" 
+              className={`login-page-submit-btn ${loading ? "loading" : ""}`}
+              disabled={loading}
+            >
               {loading ? <div className="login-page-spinner" /> : "Acessar Conta"}
             </button>
           </form>
