@@ -1,3 +1,16 @@
+import HeroSection from "./components/layout/heroSection"
+import HotelPage from "./components/layout/hotelpage"
+import NavBar from "./components/layout/navbar"
+
+function App() {
+  return (
+    <>
+      <NavBar />
+      <HeroSection />
+      <HotelPage />
+    </>
+  )
+}
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";

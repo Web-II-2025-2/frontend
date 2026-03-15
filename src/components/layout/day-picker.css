@@ -1,0 +1,56 @@
+.rdp {
+  --rdp-accent-color: rgba(255, 255, 255, 0.9);
+  --rdp-background-color: rgba(255, 255, 255, 0.1);
+  margin: 0;
+  padding: 16px;
+  color: white;
+}
+
+.rdp-day_selected {
+  background: none !important;
+  background-color: rgba(0, 119, 255, 0.15) !important;
+}
+
+.rdp-range_start {
+  background: none !important;
+  background-color: rgba(0, 119, 255, 0.15) !important;
+}
+
+.rdp-range_end {
+  background: none !important;
+  background-color: rgba(0, 119, 255, 0.15) !important;
+}
+
+.rdp-range_middle {
+  background-color: rgba(0, 119, 255, 0.15) !important;
+}
+
+.rdp-button:hover:not([disabled]):not(.rdp-day_selected) {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  color: white !important;
+}
+
+.rdp-nav_button {
+  color: white !important;
+}
+
+.rdp-caption_label {
+  color: white;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.rdp-head_cell {
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+  font-size: 0.75rem;
+}
+
+.rdp-day {
+  color: white;
+  border-radius: 6px;
+}
+
+.rdp-day_disabled {
+  color: rgba(255, 255, 255, 0.2) !important;
+}
