@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { Box, Flex, VStack, HStack, Text, IconButton } from "@chakra-ui/react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Box, Flex, VStack, Text } from "@chakra-ui/react";
 import DefaultButton from "./defaultButton";
 import Section from "./section";
 import ImagePlaceholder from "./imagePlaceHolder";
-
+import ImageSlider from "./ImageSlider";
 
 function SuiteMasterSection() {
   const [slide, setSlide] = useState(0);
@@ -14,51 +13,9 @@ function SuiteMasterSection() {
     <Section bg="sage.50">
       <Flex direction={{ base: "column", md: "row" }} gap="10" align="center">
         <VStack gap="3" flex="1">
-          <ImagePlaceholder>
-            {`Suite — foto ${slide + 1}`}
-          </ImagePlaceholder>
+          <ImagePlaceholder>{`Suite — foto ${slide + 1}`}</ImagePlaceholder>
 
-          <HStack gap="3">
-            <IconButton
-              aria-label="anterior"
-              onClick={() => setSlide((s) => (s - 1 + total) % total)}
-              size="sm"
-              borderRadius="full"
-              borderColor="sage.500"
-              color="sage.600"
-              background="sage.100"
-            >
-              <ChevronLeft size={18} />
-            </IconButton>
-
-            <IconButton
-              aria-label="próximo"
-              onClick={() => setSlide((s) => (s + 1) % total)}
-              size="sm"
-              borderRadius="full"
-              borderColor="sage.500"
-              color="sage.600"
-              background="sage.100"
-              
-            >
-              <ChevronRight size={18} />
-            </IconButton>
-          </HStack>
-
-          <HStack gap="2">
-            {Array.from({ length: total }).map((_, i) => (
-              <Box
-                key={i}
-                onClick={() => setSlide(i)}
-                w={i === slide ? "22px" : "8px"}
-                h="8px"
-                borderRadius="full"
-                bg={i === slide ? "sage.500" : "sage.300"}
-                cursor="pointer"
-                transition="all 0.3s"
-              />
-            ))}
-          </HStack>
+          <ImageSlider slide={slide} setSlide={setSlide} total={total} />
         </VStack>
 
         <VStack align="start" gap="4" flex="1">
@@ -82,6 +39,9 @@ function SuiteMasterSection() {
 }
 
 function ExperienciasSection() {
+  const [slide, setSlide] = useState(0);
+  const total = 3;
+
   return (
     <Section bg="sage.100">
       <Flex direction={{ base: "column", md: "row" }} gap="10" align="center">
@@ -94,19 +54,19 @@ function ExperienciasSection() {
           >
             Experiências e Eventos
           </Text>
-
           <Text fontSize="sm" color="gray.600" lineHeight="1.8">
             Lorem ipsum dolor sit amet consectetur. Consectetur dictum nisl et
             non.
           </Text>
-
-          <DefaultButton>Saiba mais</DefaultButton>
         </VStack>
 
         <Box flex="1.3">
-          <ImagePlaceholder>
-            Cachoeira / Natureza
-        </ImagePlaceholder> 
+          <VStack>
+            <ImagePlaceholder paddingTop={20}>
+              Cachoeira / Natureza
+            </ImagePlaceholder>
+            <ImageSlider slide={slide} setSlide={setSlide} total={total} />
+          </VStack>
         </Box>
       </Flex>
     </Section>
@@ -118,9 +78,7 @@ function RestaurantesSection() {
     <Section bg="sage.50">
       <Flex direction={{ base: "column", md: "row" }} gap="10" align="center">
         <Box flex="1.3">
-          <ImagePlaceholder h="300px">
-            Restaurantes
-            </ImagePlaceholder> 
+          <ImagePlaceholder h="300px">Restaurantes</ImagePlaceholder>
         </Box>
 
         <VStack align="end" gap="5" flex="1" textAlign="right">

@@ -1,6 +1,6 @@
 import { Flex, Text, type FlexProps } from "@chakra-ui/react";
 
-interface ImagePlaceholderProps extends FlexProps{
+interface ImagePlaceholderProps extends FlexProps {
   h?: string;
   children?: React.ReactNode;
 }
