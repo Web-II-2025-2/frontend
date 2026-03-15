@@ -39,10 +39,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const fetchUserData = async (role: RoleType): Promise<User> => {
+    if (role === 'ADMIN'){
+      return { name: "Administrador", role };
+    }
     const endpoint = role === 'GUEST' ? '/guests/profile' : '/employees/profile';
     
     const { data } = await api.get<User>(endpoint);
-    console.log("Dados do usuário obtidos:", data);
     return data;
   };
 
