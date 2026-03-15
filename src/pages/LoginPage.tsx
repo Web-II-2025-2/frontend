@@ -33,10 +33,9 @@ export function LoginPage() {
 
       console.log("Token decodificado:", decoded);
       if (decoded.role === 'GUEST') {
-        console.log("Redirecionando para dashboard de hóspede...");
         navigate("/guest/dashboard");
       } else {
-        navigate("/management/dashboard");
+        navigate("/event");
       }
             
     } catch (error: any) {
