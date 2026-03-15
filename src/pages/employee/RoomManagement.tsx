@@ -1,5 +1,6 @@
 import { useFormAction } from "../../hooks/formAction";
 import { Field, Tag, inputStyle, selectStyle } from "../../components/layout/ControlPlaneUI";
+import "../styles/roomManagement.css";
 
 const TIPO_OPTIONS = [
   { value: "Standard_CASAL", label: "Standard Casal" },
@@ -20,20 +21,29 @@ const initialState: QuartoFormState = {
   dailyRate: ""
 };
 
-export default function QuartoForm() {
-  const { form, setField, saved, submit } = useFormAction<QuartoFormState>(initialState);
+export function RoomManagement() {
+  const { form, setField, saved, loading, submit } = useFormAction<QuartoFormState>(
+    initialState, 
+    "/rooms"
+  );
+
+  const handleRoomSubmit = () => {
+    if (form.number === "" || !form.type || form.dailyRate === "") {
+      alert("Por favor, preencha todos os campos do quarto.");
+      return;
+    }
+    submit();
+  };
 
   return (
-    <div>
-      <div style={{ marginBottom: 28 }}>
+    <div className="room-form-container">
+      <div className="room-form-header">
         <Tag color="#7a4f2e">Hospedagem</Tag>
-        <h2 style={{ marginTop: 12, fontSize: 26, fontWeight: 700, fontFamily: "'Playfair Display', serif", color: "#1a1a14", letterSpacing: "-0.02em" }}>
-          Novo quarto
-        </h2>
-        <p style={{ fontSize: 14, color: "#8a8a7a", marginTop: 6 }}>Cadastre um quarto com suas especificações.</p>
+        <h2 className="room-form-title">Novo quarto</h2>
+        <p className="room-form-subtitle">Cadastre um quarto com suas especificações.</p>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18 }}>
+      <div className="room-form-grid">
         <Field label="Número do quarto">
           <input 
             style={inputStyle} 
@@ -59,7 +69,7 @@ export default function QuartoForm() {
           </select>
         </Field>
         
-        <div style={{ gridColumn: "1 / -1" }}>
+        <div className="room-form-full-width">
           <Field label="Diária (R$)">
             <input 
               style={inputStyle} 
@@ -73,15 +83,20 @@ export default function QuartoForm() {
         </div>
       </div>
 
-      <div style={{ marginTop: 28, display: "flex", alignItems: "center", gap: 16 }}>
-        <button onClick={submit} style={{
-          padding: "11px 28px", fontSize: 13, fontWeight: 600, fontFamily: "'DM Mono', monospace",
-          letterSpacing: "0.06em", textTransform: "uppercase", background: "#1a1a14", color: "#f5f4ef",
-          border: "none", borderRadius: 8, cursor: "pointer", transition: "opacity 0.15s"
-        }}>
-          Cadastrar
+      <div className="room-form-actions">
+        <button 
+          onClick={handleRoomSubmit} 
+          className={`room-form-submit ${loading ? 'loading' : ''}`}
+          disabled={loading}
+          style={{ cursor: loading ? 'not-allowed' : 'pointer' }}
+        >
+          {loading ? "Cadastrando..." : "Cadastrar Quarto"}
         </button>
-        {saved && <span style={{ fontSize: 13, color: "#4a9060", fontWeight: 500 }}>✓ Quarto cadastrado!</span>}
+        {saved && (
+          <span className="room-form-success" style={{ marginLeft: '16px', color: '#4a9060', fontWeight: 500 }}>
+            ✓ Quarto cadastrado com sucesso!
+          </span>
+        )}
       </div>
     </div>
   );
