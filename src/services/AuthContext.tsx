@@ -54,7 +54,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (token) {
         try {
           const decoded = jwtDecode<MyJwtPayload>(token);
-          
+          api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
           const userData = await fetchUserData(decoded.role);
           userData.role = decoded.role;
           

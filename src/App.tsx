@@ -7,8 +7,8 @@ import { RoomManagement } from "./pages/employee/RoomManagement";
 import { EmployeeManagement } from "./pages/employee/EmployeeManagement";
 import { RoomList } from "./pages/employee/RoomList"; 
 import { AuthProvider } from "./services/AuthContext";
+import LandingPage from "@/pages/LandingPage";
 import ProtectedRoute from "./services/ProtectedRoute";
-
 import "./styles/global.css"; 
 
 export default function App() {
@@ -29,11 +29,8 @@ export default function App() {
             </Route>
           </Route>
 
-          <Route element={<ProtectedRoute allowedRoles={['GUEST']} />}>
-            <Route path="/guest/dashboard" element={<div>Dashboard do Hóspede</div>} />
-          </Route>
-
-          <Route path="/unauthorized" element={<h1>Acesso Negado</h1>} />
+          <Route path="/home" element={<LandingPage />} />
+          <Route path="/unauthorized" element={<h1>Você não tem permissão para acessar esta área.</h1>} />
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </BrowserRouter>

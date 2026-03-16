@@ -33,7 +33,8 @@ export function LoginPage() {
 
       console.log("Token decodificado:", decoded);
       if (decoded.role === 'GUEST') {
-        navigate("/guest/dashboard");
+        console.log("Redirecionando para dashboard de hóspede...");
+        navigate("/home");
       } else {
         navigate("/event");
       }
