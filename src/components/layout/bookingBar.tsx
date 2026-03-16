@@ -53,7 +53,7 @@ export function BookingBar() {
       const { data: availableRooms } =
         await api.get<Room[]>("/rooms/available");
 
-      console.log(availableRooms)
+      console.log(availableRooms);
 
       // 2. Filtra pelo tipo escolhido pelo usuário
       const backendType = ROOM_TYPE_MAP[guests.roomType] ?? null;
@@ -61,7 +61,7 @@ export function BookingBar() {
         ? availableRooms.filter((r) => r.type === backendType)
         : availableRooms;
 
-      console.log(compatible)
+      console.log(compatible);
       if (compatible.length === 0) {
         setNoRoomAvailable(true);
         setSelectedRoom(null);
@@ -83,56 +83,67 @@ export function BookingBar() {
   };
 
   const handleConfirmReservation = async () => {
-    if (!selectedRoom || !dateRange?.from || !dateRange?.to) return;
-
-    const { data: reservation } = await api.post("/reservations", {
-      roomId: selectedRoom.id,
-      checkIn: dateRange.from.toISOString(),
-      checkOut: dateRange.to.toISOString(),
-    });
-
-    setDialogOpen(false);
-    window.location.href = `/reservas/${reservation.id}?success=true`;
+    if (!selectedRoom || !dateRange?.from || !dateRange?.to) {
+      console.log("GUARD falhou:", {
+        selectedRoom,
+        from: dateRange?.from,
+        to: dateRange?.to,
+      });
+      return;
+    }
+    try {
+      console.log("A. Enviando POST /reservations...");
+      const { data: reservation } = await api.post("/reservations", {
+        roomId: selectedRoom.id,
+        checkIn: dateRange.from.toISOString(),
+        checkOut: dateRange.to.toISOString(),
+      });
+      console.log("B. Reserva criada com sucesso:", reservation);
+      // função termina aqui normalmente, sem throw
+    } catch (err) {
+      console.log("C. ERRO no POST /reservations:", err);
+      throw err; // ← importante: relança para o handleConfirm capturar
+    }
   };
 
   return (
     <>
-    <Flex position="absolute" top="75%" right="100px" gap={10} zIndex={2}>
-      <DateRangePicker dateRange={dateRange} onChange={setDateRange} />
+      <Flex position="absolute" top="75%" right="100px" gap={10} zIndex={2}>
+        <DateRangePicker dateRange={dateRange} onChange={setDateRange} />
 
-      <GuestsPopover value={guests} onChange={setGuests} />
+        <GuestsPopover value={guests} onChange={setGuests} />
 
-      <VStack align="center">
-        <Text fontSize="xs" fontWeight="bold" letterSpacing="widest">
-          VERIFICAR RESERVA
-        </Text>
-        {fetchError && (
+        <VStack align="center">
+          <Text fontSize="xs" fontWeight="bold" letterSpacing="widest">
+            VERIFICAR RESERVA
+          </Text>
+          {fetchError && (
             <Text fontSize="xs" color="red.300" maxW="160px" textAlign="center">
               {fetchError}
             </Text>
           )}
-        <Button
-          bg="sage.600"
-          color="white"
-          border="1px solid"
-          fontWeight="bold"
-          px={6}
-          py={4}
-          h="auto"
-          _hover={{
-            bg: "sage.500",
-            borderColor: "whiteAlpha.800",
-            transform: "translateY(-1px)",
-          }}
-          _active={{ transform: "translateY(0)" }}
-          transition="all 0.2s"
-          onClick={handleSearchClick}
-        >
-          Reservar Quarto
-        </Button>
-      </VStack>
-    </Flex>
-    <BookingConfirmDialog
+          <Button
+            bg="sage.600"
+            color="white"
+            border="1px solid"
+            fontWeight="bold"
+            px={6}
+            py={4}
+            h="auto"
+            _hover={{
+              bg: "sage.500",
+              borderColor: "whiteAlpha.800",
+              transform: "translateY(-1px)",
+            }}
+            _active={{ transform: "translateY(0)" }}
+            transition="all 0.2s"
+            onClick={handleSearchClick}
+          >
+            Reservar Quarto
+          </Button>
+        </VStack>
+      </Flex>
+      <BookingConfirmDialog
         open={dialogOpen}
         onClose={() => setDialogOpen(false)}
         room={selectedRoom}
