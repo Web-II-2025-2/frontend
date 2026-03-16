@@ -42,8 +42,9 @@ export function BookingBar() {
           PREÇO ESTIMADO
         </Text>
         <Button
-          bg="white"
-          color="black"
+          bg="sage.600"
+          color="white"
+          border="1px solid"
           fontWeight="bold"
           px={6}
           py={4}

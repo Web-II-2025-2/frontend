@@ -21,6 +21,15 @@ const config = defineConfig({
           800: { value: "#274a30" },
         },
 
+        forest: { value: "#15190E" },
+        moss: { value: "#354A24" },
+        olive: { value: "#515B2E" },
+        sageDark: { value: "#606451" },
+        stone: { value: "#A3A496" },
+        sand: { value: "#9B9469" },
+        light: { value: "#E6E8E5" },
+        terracotta: { value: "#8E7157"  },
+
         navy: { value: "#0d1b2a" },
         navyMid: { value: "#1a2e45" },
 
@@ -48,6 +57,7 @@ const config = defineConfig({
           fontSize: "6xl",
           lineHeight: "6vh",
           fontWeight: "normal",
+          color: "cream",
         },
       },
 
@@ -56,6 +66,7 @@ const config = defineConfig({
           fontFamily: "body",
           fontSize: "xl",
           fontWeight: "bold",
+          color: "cream",
         },
       },
 
@@ -63,6 +74,7 @@ const config = defineConfig({
         value: {
           fontFamily: "body",
           fontSize: "xl",
+          color: "sand",
         },
       },
     },

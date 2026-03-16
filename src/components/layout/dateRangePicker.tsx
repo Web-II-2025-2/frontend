@@ -38,11 +38,14 @@ export function DateRangePicker({ dateRange, onChange }: DateRangePickerProps) {
       <Popover.Root positioning={{ placement: "top" }}>
         <Popover.Trigger asChild>
           <Button
-            bg="transparent"
+            bg="sage.600"
             color="white"
             border="1px solid"
             borderColor="whiteAlpha.700"
-            _hover={{ bg: "whiteAlpha.100", borderColor: "white" }}
+            _hover={{
+              bg: "sage.500",
+              borderColor: "whiteAlpha.800",
+            }}
             transition="all 0.2s"
             px={6}
             py={4}

@@ -2,10 +2,10 @@
 
 import { Box, Heading } from "@chakra-ui/react";
 import { BookingBar } from "./bookingBar";
-import HeroVideo from "./backgroundVid";
+import HeroImage from "./background";
 import { useState, useRef, useEffect } from "react";
 
-const ZOOM_START = 1.5;
+const ZOOM_START = 1.3;
 const ZOOM_END = 1.0;
 const ZOOM_SCROLL_DISTANCE = 400;
 
@@ -49,7 +49,7 @@ const HeroSection = () => {
 
   return (
     <Box position="relative" w="full" h="100vh">
-      <HeroVideo zoom={zoom} />
+      <HeroImage zoom={zoom} />
 
       <Box
         position="absolute"
@@ -61,8 +61,9 @@ const HeroSection = () => {
         w="40vh"
         h="100vh"
         marginLeft="60px"
+        bgGradient="linear(to-b, rgba(0,0,0,0.25), rgba(0,0,0,0.55))"
       >
-        <Heading textStyle="logo">HOTEL DISC PROG WEB</Heading>
+        <Heading textStyle="logo" textShadow="0 2px 8px rgba(0,0,0,0.45)">HOTEL DISC PROG WEB</Heading>
       </Box>
 
       <BookingBar />
