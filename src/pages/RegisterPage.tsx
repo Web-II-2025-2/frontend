@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { COLORS } from "../styles/theme";
 import { Logo } from "../components/common/Logo";
 import { InputField } from "../components/common/InputField";
 import { LeftPanel } from "../components/layout/LeftPanel";
@@ -222,7 +221,7 @@ export function RegisterPage() {
                       )}
                     </div>
                     <span className="register-page-checkbox-text">
-                      Li e aceito os <a href="#" style={{ color: COLORS.gold }}>Termos de Uso</a> do Hotel UFCG.
+                      Li e aceito os <a href="#" style={{ color: "gold" }}>Termos de Uso</a> do Hotel UFCG.
                     </span>
                   </div>
 
