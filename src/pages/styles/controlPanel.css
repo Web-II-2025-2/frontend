@@ -1,0 +1,129 @@
+.control-panel-layout {
+  display: flex;
+  height: 100vh;
+  font-family: 'DM Mono', monospace;
+  background: #f0efe8;
+}
+
+.control-panel-sidebar {
+  width: 220px;
+  min-width: 220px;
+  background: #1a1a14;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 0 20px;
+}
+
+.control-panel-sidebar-header {
+  padding: 0 20px 24px;
+  border-bottom: 1px solid #2e2e26;
+}
+
+.control-panel-sidebar-subtitle {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #5a5a4a;
+  margin-bottom: 6px;
+}
+
+.control-panel-sidebar-title {
+  font-size: 17px;
+  font-weight: 700;
+  font-family: 'Playfair Display', serif;
+  color: #f5f4ef;
+  letter-spacing: -0.01em;
+}
+
+.control-panel-nav {
+  flex: 1;
+  padding: 20px 0;
+  overflow-y: auto;
+}
+
+.control-panel-nav-group {
+  margin-bottom: 20px;
+}
+
+.control-panel-nav-section {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #4a4a3a;
+  padding: 0 20px;
+  margin-bottom: 6px;
+}
+
+.control-panel-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 20px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 400;
+  background: transparent;
+  color: #7a7a6a;
+  border-left: 2px solid transparent;
+  transition: all 0.15s;
+}
+
+.control-panel-nav-link.active {
+  font-weight: 600;
+  background: #2e2e26;
+  color: #f5f4ef;
+  border-left: 2px solid #c8b97a;
+}
+
+.control-panel-nav-icon {
+  font-size: 14px;
+}
+
+.control-panel-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.control-panel-topbar {
+  padding: 16px 36px;
+  border-bottom: 1px solid #dddcd4;
+  background: #f5f4ef;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.control-panel-breadcrumb {
+  font-size: 12px;
+  color: #8a8a7a;
+}
+
+.control-panel-breadcrumb-current {
+  color: #1a1a14;
+  font-weight: 600;
+}
+
+.control-panel-date {
+  font-size: 11px;
+  color: #8a8a7a;
+  letter-spacing: 0.06em;
+}
+
+.control-panel-content-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  padding: 40px 36px;
+}
+
+.control-panel-content-card {
+  max-width: 640px;
+  background: #fff;
+  border: 1px solid #e2e0d6;
+  border-radius: 12px;
+  padding: 32px 36px;
+}
