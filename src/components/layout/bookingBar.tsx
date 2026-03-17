@@ -13,7 +13,6 @@ import { ROOM_TYPE_MAP } from "@/constants/roomType";
 
 export function BookingBar() {
   const {
-    loading,
     error,
     selectedRoom,
     noRoomAvailable,

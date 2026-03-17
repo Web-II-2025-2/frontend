@@ -29,6 +29,19 @@ interface ReservationDetailDialogProps {
   onUpdated: () => void;
 }
 
+
+const contentStyles = {
+  position: "fixed" as const,
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  margin: "0",
+  borderRadius: "2xl",
+  overflow: "hidden",
+  boxShadow: "2xl",
+};
+
+
 export function ReservationDetailDialog({
   open,
   onClose,
@@ -55,56 +68,62 @@ export function ReservationDetailDialog({
     handleRoomService,
   } = useReservationDetail({ open, reservation, onClose, onUpdated });
 
-  if (!reservation) return null;
+  const cfg = reservation ? STATUS_CONFIG[reservation.status] : null;
+  const checkIn = reservation ? new Date(reservation.checkIn) : null;
+  const checkOut = reservation ? new Date(reservation.checkOut) : null;
+  const nights = checkIn && checkOut ? nightsBetween(checkIn, checkOut) : 0;
 
-  const cfg = STATUS_CONFIG[reservation.status];
-  const checkIn = new Date(reservation.checkIn);
-  const checkOut = new Date(reservation.checkOut);
-  const nights = nightsBetween(checkIn, checkOut);
+  const renderInner = () => {
+    if (!reservation || !cfg || !checkIn || !checkOut) return null;
 
-
-  if (view === "success") {
-    return (
-      <DialogRoot open={open} onOpenChange={handleOpenChange} placement="center" closeOnInteractOutside={false}>
-        <DialogBackdrop />
-        <DialogContent maxW="420px" borderRadius="2xl" overflow="hidden" boxShadow="2xl">
+    if (view === "success") {
+      return (
+        <DialogContent {...contentStyles} maxW="420px">
           <Box bg="green.500" px={6} pt={6} pb={5} textAlign="center" position="relative">
             <DialogCloseButton />
             <Text fontSize="4xl" mb={2}>✅</Text>
             <DialogHeader p={0}>
-              <DialogTitle color="white" fontSize="xl" fontWeight="bold">Pronto!</DialogTitle>
+              <DialogTitle color="white" fontSize="xl" fontWeight="bold">
+                Pronto!
+              </DialogTitle>
             </DialogHeader>
             <Text color="whiteAlpha.900" fontSize="sm" mt={1}>{successMsg}</Text>
           </Box>
           <DialogFooter px={6} pb={6} pt={6}>
-            <Button bg="sage.600" color="white" borderRadius="xl" w="full" fontWeight="semibold" _hover={{ bg: "sage.500" }} onClick={handleClose}>
+            <Button
+              bg="sage.600" color="white" borderRadius="xl" w="full"
+              fontWeight="semibold" _hover={{ bg: "sage.500" }}
+              onClick={handleClose}
+            >
               Fechar
             </Button>
           </DialogFooter>
         </DialogContent>
-      </DialogRoot>
-    );
-  }
+      );
+    }
 
-  if (view === "confirm-cancel") {
-    return (
-      <DialogRoot open={open} onOpenChange={handleOpenChange} placement="center" closeOnInteractOutside={false}>
-        <DialogBackdrop />
-        <DialogContent maxW="420px" borderRadius="2xl" overflow="hidden" boxShadow="2xl">
+    if (view === "confirm-cancel") {
+      return (
+        <DialogContent {...contentStyles} maxW="420px">
           <Box bg="red.600" px={6} pt={6} pb={5} position="relative">
             <DialogCloseButton />
             <DialogHeader p={0}>
-              <DialogTitle color="white" fontSize="xl" fontWeight="bold">Cancelar Reserva</DialogTitle>
+              <DialogTitle color="white" fontSize="xl" fontWeight="bold">
+                Cancelar Reserva
+              </DialogTitle>
             </DialogHeader>
-            <Text color="whiteAlpha.800" fontSize="sm" mt={1}>Esta ação não pode ser desfeita.</Text>
+            <Text color="whiteAlpha.800" fontSize="sm" mt={1}>
+              Esta ação não pode ser desfeita.
+            </Text>
           </Box>
           <DialogBody pt={6} pb={2} px={6}>
             <VStack align="stretch" gap={3}>
               <Box bg="red.50" borderRadius="xl" p={4} border="1px solid" borderColor="red.200">
                 <Text fontSize="sm" color="red.700">
-                  Tem certeza que deseja cancelar a reserva <strong>#{reservation.id}</strong>
+                  Tem certeza que deseja cancelar a reserva{" "}
+                  <strong>#{reservation.id}</strong>
                   {reservation.room && (
-                    <> — Quarto {reservation.room.number}, {checkIn} → {checkOut}</>
+                    <> — Quarto {reservation.room.number}, {formatDate(checkIn)} → {formatDate(checkOut)}</>
                   )}?
                 </Text>
               </Box>
@@ -116,27 +135,33 @@ export function ReservationDetailDialog({
             </VStack>
           </DialogBody>
           <DialogFooter px={6} pb={6} pt={4} gap={3}>
-            <Button variant="outline" borderRadius="xl" flex={1} fontWeight="semibold" onClick={() => { setError(null); setView("detail"); }}>
+            <Button
+              variant="outline" borderRadius="xl" flex={1} fontWeight="semibold"
+              onClick={() => { setError(null); setView("detail"); }}
+            >
               Voltar
             </Button>
-            <Button bg="red.600" color="white" borderRadius="xl" flex={1} fontWeight="semibold" _hover={{ bg: "red.500" }} loading={loading} loadingText="Cancelando…" onClick={handleCancel}>
+            <Button
+              bg="red.600" color="white" borderRadius="xl" flex={1} fontWeight="semibold"
+              _hover={{ bg: "red.500" }} loading={loading} loadingText="Cancelando…"
+              onClick={handleCancel}
+            >
               Confirmar Cancelamento
             </Button>
           </DialogFooter>
         </DialogContent>
-      </DialogRoot>
-    );
-  }
+      );
+    }
 
-  if (view === "room-service") {
-    return (
-      <DialogRoot open={open} onOpenChange={handleOpenChange} placement="center" closeOnInteractOutside={false}>
-        <DialogBackdrop />
-        <DialogContent maxW="460px" borderRadius="2xl" overflow="hidden" boxShadow="2xl">
+    if (view === "room-service") {
+      return (
+        <DialogContent {...contentStyles} maxW="460px">
           <Box bg="sage.600" px={6} pt={6} pb={5} position="relative">
             <DialogCloseButton />
             <DialogHeader p={0}>
-              <DialogTitle color="white" fontSize="xl" fontWeight="bold">Serviço de Quarto</DialogTitle>
+              <DialogTitle color="white" fontSize="xl" fontWeight="bold">
+                Serviço de Quarto
+              </DialogTitle>
             </DialogHeader>
             <Text color="whiteAlpha.800" fontSize="sm" mt={1}>
               Quarto {reservation.room?.number} · Reserva #{reservation.id}
@@ -157,18 +182,18 @@ export function ReservationDetailDialog({
                   rows={4}
                   fontSize="sm"
                   borderColor="gray.200"
-                  _focus={{ borderColor: "sage.400", boxShadow: "0 0 0 1px var(--chakra-colors-sage-400)" }}
+                  _focus={{
+                    borderColor: "sage.400",
+                    boxShadow: "0 0 0 1px var(--chakra-colors-sage-400)",
+                  }}
                 />
               </Box>
 
               <Box
                 bg={requestCleaning ? "orange.50" : "gray.50"}
-                borderRadius="xl"
-                p={4}
-                border="1px solid"
+                borderRadius="xl" p={4} border="1px solid"
                 borderColor={requestCleaning ? "orange.300" : "gray.200"}
-                cursor="pointer"
-                transition="all 0.2s"
+                cursor="pointer" transition="all 0.2s"
                 onClick={() => setRequestCleaning((v) => !v)}
               >
                 <HStack gap={3} align="start">
@@ -203,7 +228,10 @@ export function ReservationDetailDialog({
             </VStack>
           </DialogBody>
           <DialogFooter px={6} pb={6} pt={4} gap={3}>
-            <Button variant="outline" borderRadius="xl" flex={1} fontWeight="semibold" onClick={() => { setError(null); setView("detail"); }}>
+            <Button
+              variant="outline" borderRadius="xl" flex={1} fontWeight="semibold"
+              onClick={() => { setError(null); setView("detail"); }}
+            >
               Voltar
             </Button>
             <Button
@@ -216,26 +244,29 @@ export function ReservationDetailDialog({
             </Button>
           </DialogFooter>
         </DialogContent>
-      </DialogRoot>
-    );
-  }
+      );
+    }
 
-  return (
-    <DialogRoot open={open} onOpenChange={handleOpenChange} placement="center" closeOnInteractOutside={false}>
-      <DialogBackdrop />
-      <DialogContent maxW="480px" borderRadius="2xl" overflow="hidden" boxShadow="2xl">
+    return (
+      <DialogContent {...contentStyles} maxW="480px">
         <Box bg="sage.600" px={6} pt={6} pb={5} position="relative">
           <DialogCloseButton />
           <DialogHeader p={0}>
-            <DialogTitle color="white" fontSize="xl" fontWeight="bold">Detalhes da Reserva</DialogTitle>
+            <DialogTitle color="white" fontSize="xl" fontWeight="bold">
+              Detalhes da Reserva
+            </DialogTitle>
           </DialogHeader>
           <HStack mt={2} gap={2}>
-            <Box px={3} py={1} borderRadius="full" fontSize="xs" fontWeight="bold" color={cfg.color} bg="white">
+            <Box
+              px={3} py={1} borderRadius="full" fontSize="xs" fontWeight="bold"
+              color={cfg.color} bg="white"
+            >
               {cfg.label}
             </Box>
             {reservation.room && (
               <Text color="whiteAlpha.800" fontSize="sm">
-                Quarto {reservation.room.number} · {ROOM_TYPE_LABEL[reservation.room.type] ?? reservation.room.type}
+                Quarto {reservation.room.number} ·{" "}
+                {ROOM_TYPE_LABEL[reservation.room.type] ?? reservation.room.type}
               </Text>
             )}
           </HStack>
@@ -246,19 +277,27 @@ export function ReservationDetailDialog({
             <Box bg="gray.50" borderRadius="xl" p={4} border="1px solid" borderColor="gray.100">
               <HStack justify="space-between">
                 <VStack align="start" gap={0}>
-                  <Text fontSize="xs" color="gray.400" fontWeight="semibold" letterSpacing="wider">CHECK-IN</Text>
+                  <Text fontSize="xs" color="gray.400" fontWeight="semibold" letterSpacing="wider">
+                    CHECK-IN
+                  </Text>
                   <Text fontWeight="bold">{formatDate(checkIn)}</Text>
                 </VStack>
                 <Text color="gray.300" fontSize="xl">→</Text>
                 <VStack align="end" gap={0}>
-                  <Text fontSize="xs" color="gray.400" fontWeight="semibold" letterSpacing="wider">CHECK-OUT</Text>
+                  <Text fontSize="xs" color="gray.400" fontWeight="semibold" letterSpacing="wider">
+                    CHECK-OUT
+                  </Text>
                   <Text fontWeight="bold">{formatDate(checkOut)}</Text>
                 </VStack>
               </HStack>
               <Box mt={3} pt={3} borderTop="1px solid" borderColor="gray.200">
                 <HStack justify="space-between">
-                  <Text fontSize="sm" color="gray.500">{nights} {nights === 1 ? "noite" : "noites"}</Text>
-                  <Text fontSize="sm" fontWeight="extrabold" color="sage.700">{formatCurrency(reservation.totalPrice)}</Text>
+                  <Text fontSize="sm" color="gray.500">
+                    {nights} {nights === 1 ? "noite" : "noites"}
+                  </Text>
+                  <Text fontSize="sm" fontWeight="extrabold" color="sage.700">
+                    {formatCurrency(reservation.totalPrice)}
+                  </Text>
                 </HStack>
               </Box>
             </Box>
@@ -266,11 +305,19 @@ export function ReservationDetailDialog({
             <VStack align="stretch" gap={2}>
               {reservation.status === "CONFIRMED" && (
                 <>
-                  <Button bg="blue.600" color="white" borderRadius="xl" fontWeight="semibold" _hover={{ bg: "blue.500" }} loading={loading} loadingText="Processando…" onClick={handleCheckin}>
-                    🏨 Realizar Check-in
+                  <Button
+                    bg="sage.600" color="white" borderRadius="xl" fontWeight="semibold"
+                    _hover={{ bg: "sage.500" }} loading={loading} loadingText="Processando…"
+                    onClick={handleCheckin}
+                  >
+                    Realizar Check-in
                   </Button>
-                  <Button variant="outline" borderRadius="xl" fontWeight="semibold" borderColor="red.300" color="red.600" _hover={{ bg: "red.50" }} onClick={() => { setError(null); setView("confirm-cancel"); }}>
-                    ✕ Cancelar Reserva
+                  <Button
+                    variant="outline" borderRadius="xl" fontWeight="semibold"
+                    borderColor="red.300" color="red.600" _hover={{ bg: "red.50" }}
+                    onClick={() => { setError(null); setView("confirm-cancel"); }}
+                  >
+                    Cancelar Reserva
                   </Button>
                 </>
               )}
@@ -288,7 +335,6 @@ export function ReservationDetailDialog({
                   >
                     🛎 {roomDirty ? "Limpeza já solicitada" : "Solicitar Serviço de Quarto"}
                   </Button>
-
                   {roomDirty && (
                     <Box bg="orange.50" borderRadius="xl" p={3} border="1px solid" borderColor="orange.200">
                       <Text fontSize="xs" color="orange.700" textAlign="center">
@@ -296,8 +342,11 @@ export function ReservationDetailDialog({
                       </Text>
                     </Box>
                   )}
-
-                  <Button bg="gray.700" color="white" borderRadius="xl" fontWeight="semibold" _hover={{ bg: "gray.600" }} loading={loading} loadingText="Processando…" onClick={handleCheckout}>
+                  <Button
+                    bg="gray.700" color="white" borderRadius="xl" fontWeight="semibold"
+                    _hover={{ bg: "gray.600" }} loading={loading} loadingText="Processando…"
+                    onClick={handleCheckout}
+                  >
                     🚪 Realizar Check-out
                   </Button>
                 </>
@@ -306,7 +355,9 @@ export function ReservationDetailDialog({
               {(reservation.status === "CHECKED_OUT" || reservation.status === "CANCELED") && (
                 <Box bg="gray.50" borderRadius="xl" p={4} border="1px solid" borderColor="gray.200" textAlign="center">
                   <Text fontSize="sm" color="gray.500">
-                    {reservation.status === "CHECKED_OUT" ? "Esta reserva foi finalizada." : "Esta reserva foi cancelada."}
+                    {reservation.status === "CHECKED_OUT"
+                      ? "Esta reserva foi finalizada."
+                      : "Esta reserva foi cancelada."}
                   </Text>
                 </Box>
               )}
@@ -314,7 +365,7 @@ export function ReservationDetailDialog({
 
             {error && (
               <Box bg="red.50" borderRadius="xl" p={3} border="1px solid" borderColor="red.200">
-                <Text fontSize="sm" color="red.600"> {error}</Text>
+                <Text fontSize="sm" color="red.600">⚠ {error}</Text>
               </Box>
             )}
           </VStack>
@@ -322,12 +373,22 @@ export function ReservationDetailDialog({
 
         <DialogFooter px={6} pb={6} pt={4}>
           <DialogCloseTrigger asChild>
-            <Button variant="outline" borderRadius="xl" w="full" fontWeight="semibold">
-              Fechar
-            </Button>
+            
           </DialogCloseTrigger>
         </DialogFooter>
       </DialogContent>
+    );
+  };
+
+  return (
+    <DialogRoot
+      open={open}
+      onOpenChange={handleOpenChange}
+      placement="center"
+      closeOnInteractOutside={false}
+    >
+      <DialogBackdrop />
+      {renderInner()}
     </DialogRoot>
   );
 }
