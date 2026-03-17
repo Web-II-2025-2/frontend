@@ -7,103 +7,36 @@ import {
   type GuestsState,
 } from "./guestsPopOver";
 import { DateRangePicker } from "./dateRangePicker";
-import api from "@/services/api";
-import axios from "axios";
 import { BookingConfirmDialog } from "./BookingConfirmDialog";
-
-export interface Room {
-  id: number;
-  number: string;
-  type: string;
-  status: string;
-  dailyRate: number;
-}
-
-const ROOM_TYPE_MAP: Record<string, string> = {
-  "Suíte Master": "SUITE",
-  "Quarto Deluxe": "DELUXE",
-  "Quarto Single": "SINGLE",
-  "Suíte Casal": "STANDARD_CASAL",
-};
+import { useBooking } from "@/hooks/useBooking";
 
 export function BookingBar() {
-  const today = new Date();
-  const tomorrow = new Date(today);
-  tomorrow.setDate(today.getDate() + 1);
+  const {
+    loading,
+    error,
+    selectedRoom,
+    noRoomAvailable,
+    searchRooms,
+    confirmReservation,
+  } = useBooking();
 
-  const [dateRange, setDateRange] = useState<DateRange | undefined>({
-    from: today,
-    to: tomorrow,
+  const [dateRange, setDateRange] = useState<DateRange | undefined>(() => {
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+    return { from: today, to: tomorrow };
   });
   const [guests, setGuests] = useState<GuestsState>(DEFAULT_GUESTS);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
-  const [noRoomAvailable, setNoRoomAvailable] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [fetchError, setFetchError] = useState<string | null>(null);
 
   const handleSearchClick = async () => {
-    setLoading(true);
-    setFetchError(null);
-    setNoRoomAvailable(false);
-    setSelectedRoom(null);
-
-    try {
-      // 1. Busca todos os quartos disponíveis
-      const { data: availableRooms } =
-        await api.get<Room[]>("/rooms/available");
-
-      console.log(availableRooms);
-
-      // 2. Filtra pelo tipo escolhido pelo usuário
-      const backendType = ROOM_TYPE_MAP[guests.roomType] ?? null;
-      const compatible = backendType
-        ? availableRooms.filter((r) => r.type === backendType)
-        : availableRooms;
-
-      console.log(compatible);
-      if (compatible.length === 0) {
-        setNoRoomAvailable(true);
-        setSelectedRoom(null);
-        setDialogOpen(true);
-        return;
-      }
-
-      // 3. Pega o primeiro disponível automaticamente
-      setSelectedRoom(compatible[0]);
-      setDialogOpen(true);
-    } catch (err: unknown) {
-      const message = axios.isAxiosError(err)
-        ? (err.response?.data?.message ?? err.message)
-        : "Erro ao buscar quartos.";
-      setFetchError(message);
-    } finally {
-      setLoading(false);
-    }
+    await searchRooms(guests.roomType);
+    if (!error) setDialogOpen(true);
   };
 
   const handleConfirmReservation = async () => {
-    if (!selectedRoom || !dateRange?.from || !dateRange?.to) {
-      console.log("GUARD falhou:", {
-        selectedRoom,
-        from: dateRange?.from,
-        to: dateRange?.to,
-      });
-      return;
-    }
-    try {
-      console.log("A. Enviando POST /reservations...");
-      const { data: reservation } = await api.post("/reservations", {
-        roomId: selectedRoom.id,
-        checkIn: dateRange.from.toISOString(),
-        checkOut: dateRange.to.toISOString(),
-      });
-      console.log("B. Reserva criada com sucesso:", reservation);
-      // função termina aqui normalmente, sem throw
-    } catch (err) {
-      console.log("C. ERRO no POST /reservations:", err);
-      throw err; // ← importante: relança para o handleConfirm capturar
-    }
+    if (!selectedRoom || !dateRange?.from || !dateRange?.to) return;
+    await confirmReservation(selectedRoom, dateRange.from, dateRange.to);
   };
 
   return (
@@ -117,9 +50,9 @@ export function BookingBar() {
           <Text fontSize="xs" fontWeight="bold" letterSpacing="widest">
             VERIFICAR RESERVA
           </Text>
-          {fetchError && (
+          {error && (
             <Text fontSize="xs" color="red.300" maxW="160px" textAlign="center">
-              {fetchError}
+              {error}
             </Text>
           )}
           <Button
