@@ -9,6 +9,7 @@ import {
 import { DateRangePicker } from "./dateRangePicker";
 import { BookingConfirmDialog } from "./BookingConfirmDialog";
 import { useBooking } from "@/hooks/useBooking";
+import { ROOM_TYPE_MAP } from "@/constants/roomType";
 
 export function BookingBar() {
   const {
@@ -84,6 +85,7 @@ export function BookingBar() {
         chosenRoomTypeLabel={guests.roomType}
         dateRange={dateRange}
         onConfirm={handleConfirmReservation}
+        roomTypeLabelMap={ROOM_TYPE_MAP}
       />
     </>
   );

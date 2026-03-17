@@ -319,7 +319,7 @@ export function ReservationDetailDialog({
                   borderColor="red.200"
                 >
                   <Text fontSize="sm" color="red.600">
-                    ⚠ {error}
+                    {error}
                   </Text>
                 </Box>
               )}
@@ -470,7 +470,7 @@ export function ReservationDetailDialog({
                   borderColor="red.200"
                 >
                   <Text fontSize="sm" color="red.600">
-                    ⚠ {error}
+                     {error}
                   </Text>
                 </Box>
               )}
@@ -715,7 +715,7 @@ export function ReservationDetailDialog({
                 borderColor="red.200"
               >
                 <Text fontSize="sm" color="red.600">
-                  ⚠ {error}
+                   {error}
                 </Text>
               </Box>
             )}
