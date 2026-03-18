@@ -3,9 +3,9 @@ import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
 import { AuthProvider } from "./services/AuthContext";
 import LandingPage from "@/pages/LandingPage";
-import { ProfilePage } from "./components/layout/ProfilePage";
 import "./styles/global.css"; 
 import ProtectedRoute from "./services/ProtectedRoute";
+import { ProfilePage } from "./pages/ProfilePage";
 
 export default function App() {
   return (
