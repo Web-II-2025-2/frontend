@@ -5,7 +5,6 @@ import {
   DialogFooter,
   Box,
   Text,
-  Button,
 } from "@chakra-ui/react";
 
 import type { DateRange } from "react-day-picker";
@@ -21,7 +20,6 @@ type BookingUnavailableContentProps = {
 export function BookingUnavailableContent({
   chosenRoomTypeLabel,
   dateRange,
-  onClose,
 }: BookingUnavailableContentProps) {
   return (
     <>

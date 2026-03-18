@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Box, Flex, VStack, Text } from "@chakra-ui/react";
-import DefaultButton from "./defaultButton";
-import Section from "./section";
+import DefaultButton from "../common/defaultButton";
+import Section from "../common/section";
 import ImagePlaceholder from "./imagePlaceHolder";
-import ImageSlider from "./ImageSlider";
+import ImageSlider from "../common/ImageSlider";
 
 function SuiteMasterSection() {
   const [slide, setSlide] = useState(0);

@@ -6,7 +6,7 @@ import {
   GuestsPopover,
   type GuestsState,
 } from "./guestsPopOver";
-import { DateRangePicker } from "./dateRangePicker";
+import { DateRangePicker } from "../common/dateRangePicker";
 import { BookingConfirmDialog } from "./BookingConfirmDialog";
 import { useBooking } from "@/hooks/useBooking";
 import { ROOM_TYPE_MAP } from "@/constants/roomType";

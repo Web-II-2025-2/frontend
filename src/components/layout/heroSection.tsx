@@ -1,9 +1,9 @@
 "use client";
 
 import { Box, Heading } from "@chakra-ui/react";
-import { BookingBar } from "./bookingBar";
-import HeroImage from "./background";
 import { useState, useRef, useEffect } from "react";
+import HeroImage from "./background";
+import { BookingBar } from "./bookingBar";
 
 const ZOOM_START = 1.3;
 const ZOOM_END = 1.0;
