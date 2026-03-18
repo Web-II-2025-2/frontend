@@ -25,9 +25,9 @@ interface GuestsPopoverProps {
 // decidir depois se isso vai ser mockado ou vem do back
 export const ROOM_TYPES = [
   "Suíte Master",
-  "Quarto Standard",
+  "Quarto Single",
   "Quarto Deluxe",
-  "Suíte Presidencial",
+  "Suíte Casal",
 ];
 
 export const DEFAULT_GUESTS: GuestsState = {

@@ -7,56 +7,85 @@ import {
   type GuestsState,
 } from "./guestsPopOver";
 import { DateRangePicker } from "./dateRangePicker";
+import { BookingConfirmDialog } from "./BookingConfirmDialog";
+import { useBooking } from "@/hooks/useBooking";
+import { ROOM_TYPE_MAP } from "@/constants/roomType";
 
 export function BookingBar() {
-  const today = new Date();
-  const tomorrow = new Date(today);
-  tomorrow.setDate(today.getDate() + 1);
+  const {
+    error,
+    selectedRoom,
+    noRoomAvailable,
+    searchRooms,
+    confirmReservation,
+  } = useBooking();
 
-  const [dateRange, setDateRange] = useState<DateRange | undefined>({
-    from: today,
-    to: tomorrow,
+  const [dateRange, setDateRange] = useState<DateRange | undefined>(() => {
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+    return { from: today, to: tomorrow };
   });
   const [guests, setGuests] = useState<GuestsState>(DEFAULT_GUESTS);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
-  const handleSearch = () => {
-    const params = new URLSearchParams({
-      checkIn: dateRange?.from?.toISOString() ?? "",
-      checkOut: dateRange?.to?.toISOString() ?? "",
-      adults: String(guests.adults),
-      children: String(guests.children),
-      rooms: String(guests.rooms),
-      roomType: guests.roomType,
-    });
-    window.location.href = `/quartos?${params.toString()}`;
+  const handleSearchClick = async () => {
+    await searchRooms(guests.roomType);
+    if (!error) setDialogOpen(true);
+  };
+
+  const handleConfirmReservation = async () => {
+    if (!selectedRoom || !dateRange?.from || !dateRange?.to) return;
+    await confirmReservation(selectedRoom, dateRange.from, dateRange.to);
   };
 
   return (
-    <Flex position="absolute" top="75%" right="100px" gap={10} zIndex={2}>
-      <DateRangePicker dateRange={dateRange} onChange={setDateRange} />
+    <>
+      <Flex position="absolute" top="75%" right="100px" gap={10} zIndex={2}>
+        <DateRangePicker dateRange={dateRange} onChange={setDateRange} />
 
-      <GuestsPopover value={guests} onChange={setGuests} />
+        <GuestsPopover value={guests} onChange={setGuests} />
 
-      <VStack align="center">
-        <Text fontSize="xs" fontWeight="bold" letterSpacing="widest">
-          PREÇO ESTIMADO
-        </Text>
-        <Button
-          bg="sage.600"
-          color="white"
-          border="1px solid"
-          fontWeight="bold"
-          px={6}
-          py={4}
-          h="auto"
-          _hover={{ bg: "whiteAlpha.800", transform: "translateY(-1px)" }}
-          _active={{ transform: "translateY(0)" }}
-          transition="all 0.2s"
-          onClick={handleSearch}
-        >
-          Verificar preço
-        </Button>
-      </VStack>
-    </Flex>
+        <VStack align="center">
+          <Text fontSize="xs" fontWeight="bold" letterSpacing="widest">
+            VERIFICAR RESERVA
+          </Text>
+          {error && (
+            <Text fontSize="xs" color="red.300" maxW="160px" textAlign="center">
+              {error}
+            </Text>
+          )}
+          <Button
+            bg="sage.600"
+            color="white"
+            border="1px solid"
+            fontWeight="bold"
+            px={6}
+            py={4}
+            h="auto"
+            _hover={{
+              bg: "sage.500",
+              borderColor: "whiteAlpha.800",
+              transform: "translateY(-1px)",
+            }}
+            _active={{ transform: "translateY(0)" }}
+            transition="all 0.2s"
+            onClick={handleSearchClick}
+          >
+            Reservar Quarto
+          </Button>
+        </VStack>
+      </Flex>
+      <BookingConfirmDialog
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+        room={selectedRoom}
+        noRoomAvailable={noRoomAvailable}
+        chosenRoomTypeLabel={guests.roomType}
+        dateRange={dateRange}
+        onConfirm={handleConfirmReservation}
+        roomTypeLabelMap={ROOM_TYPE_MAP}
+      />
+    </>
   );
 }

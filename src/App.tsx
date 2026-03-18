@@ -8,8 +8,9 @@ import { EmployeeManagement } from "./pages/employee/EmployeeManagement";
 import { RoomList } from "./pages/employee/RoomList"; 
 import { AuthProvider } from "./services/AuthContext";
 import LandingPage from "@/pages/LandingPage";
-import ProtectedRoute from "./services/ProtectedRoute";
 import "./styles/global.css"; 
+import ProtectedRoute from "./services/ProtectedRoute";
+import { ProfilePage } from "./pages/ProfilePage";
 
 export default function App() {
   return (
@@ -19,6 +20,8 @@ export default function App() {
           <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile/reservations" element={<ProfilePage />} />
           
           <Route element={<ProtectedRoute allowedRoles={['ADMIN', 'MANAGER', 'EMPLOYEE']} />}>
             <Route element={<ControlPanel />}>
