@@ -3,7 +3,6 @@ import {
   DialogTitle,
   DialogBody,
   DialogFooter,
-  DialogCloseTrigger,
   Box,
   Text,
   Button,
@@ -11,6 +10,7 @@ import {
 
 import type { DateRange } from "react-day-picker";
 import { formatDate } from "@/utils/date";
+import { DialogCloseButton } from "../common/CloseButton";
 
 type BookingUnavailableContentProps = {
   chosenRoomTypeLabel: string;
@@ -59,19 +59,7 @@ export function BookingUnavailableContent({
       </DialogBody>
 
       <DialogFooter px={6} pb={6} pt={4}>
-        <DialogCloseTrigger asChild>
-          <Button
-            bg="sage.600"
-            color="white"
-            borderRadius="xl"
-            w="full"
-            fontWeight="semibold"
-            _hover={{ bg: "sage.500" }}
-            onClick={onClose}
-          >
-            Alterar Busca
-          </Button>
-        </DialogCloseTrigger>
+         <DialogCloseButton />
       </DialogFooter>
     </>
   );
