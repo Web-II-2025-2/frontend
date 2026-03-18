@@ -36,7 +36,7 @@ export function LoginPage() {
         console.log("Redirecionando para dashboard de hóspede...");
         navigate("/home");
       } else {
-        navigate("/management/dashboard");
+        navigate("/event");
       }
             
     } catch (error: any) {
