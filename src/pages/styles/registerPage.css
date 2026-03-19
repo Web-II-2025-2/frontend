@@ -1,0 +1,518 @@
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.register-page-container {
+  display: flex;
+  min-height: 100vh;
+  background: var(--navy);
+}
+
+.register-page-panel {
+  width: 500px;
+  flex-shrink: 0;
+  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 56px;
+  position: relative;
+  overflow: hidden;
+  animation: slideIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.register-page-decoration-top {
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(201, 168, 76, 0.12) 0%,
+    transparent 70%
+  );
+}
+
+.register-page-decoration-bottom {
+  position: absolute;
+  bottom: -80px;
+  left: -80px;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(201, 168, 76, 0.08) 0%,
+    transparent 70%
+  );
+}
+
+.register-page-content {
+  width: 100%;
+  max-width: 380px;
+  position: relative;
+  z-index: 1;
+}
+
+.register-page-title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 4px;
+  line-height: 1.1;
+}
+
+.register-page-subtitle {
+  font-size: 13px;
+  color: var(--text-sub);
+  margin-bottom: 22px;
+  font-weight: 300;
+}
+
+.register-page-steps {
+  display: flex;
+  margin-bottom: 24px;
+}
+
+.register-page-step-container {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.register-page-step-progress-line {
+  position: absolute;
+  top: 14px;
+  left: calc(50% + 14px);
+  width: calc(100% - 28px);
+  height: 1px;
+  transition: background 0.4s;
+}
+
+.register-page-step-progress-line.active {
+  background: var(--gold);
+}
+
+.register-page-step-progress-line.inactive {
+  background: #ddd5c3;
+}
+
+.register-page-step-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  font-weight: 500;
+  transition: all 0.3s;
+  z-index: 1;
+  cursor: default;
+}
+
+.register-page-step-dot.active {
+  background: var(--navy);
+  border: 1.5px solid var(--navy);
+  color: var(--gold-light);
+}
+
+.register-page-step-dot.done {
+  background: var(--gold);
+  border: 1.5px solid var(--gold);
+  color: var(--navy);
+}
+
+.register-page-step-dot.inactive {
+  background: var(--white);
+  border: 1.5px solid var(--border-light);
+  color: #b0a898;
+}
+
+.register-page-step-label {
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  font-weight: 400;
+  white-space: nowrap;
+  transition: all 0.3s;
+  color: #b0a898;
+}
+
+.register-page-step-label.active {
+  color: var(--navy);
+  font-weight: 500;
+}
+
+.register-page-step-label.done {
+  color: var(--gold);
+  font-weight: 500;
+}
+
+.register-page-form-section {
+  animation: fadeUp 0.35s ease both;
+}
+
+.register-page-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.register-page-form-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #8a96a5;
+  margin-bottom: 6px;
+}
+
+.register-page-password-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.register-page-password-input input {
+  width: 100%;
+  padding: 13px 44px 13px 42px;
+  background: var(--white);
+  border: 1.5px solid var(--border-light);
+  border-radius: 12px;
+  font-family: "Jost", sans-serif;
+  font-size: 14px;
+  color: var(--navy);
+  transition: border-color 0.2s;
+}
+
+.register-page-password-input input:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+.register-page-password-toggle {
+  position: absolute;
+  right: 14px;
+  background: none;
+  border: none;
+  color: #bbb5a8;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 4px;
+  transition: color 0.2s;
+}
+
+.register-page-password-toggle:hover {
+  color: var(--navy);
+}
+
+.register-page-toggle-top {
+  position: absolute;
+  left: 14px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.register-page-toggle-absolute {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: var(--muted);
+  pointer-events: none;
+}
+
+.register-page-token-input {
+  width: 100%;
+  padding: 13px 44px 13px 42px;
+  background: var(--white);
+  border: 1.5px solid var(--border-light);
+  border-radius: 12px;
+  font-family: "Jost", sans-serif;
+  font-size: 14px;
+  color: var(--navy);
+}
+
+.register-page-token-input:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+.register-page-select {
+  width: 100%;
+  padding: 13px 14px 13px 42px;
+  background: var(--white);
+  border: 1.5px solid var(--border-light);
+  border-radius: 12px;
+  font-family: "Jost", sans-serif;
+  font-size: 14px;
+  color: var(--navy);
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.register-page-select:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+.register-page-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+.register-page-checkbox-input {
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  border: 1.5px solid var(--border-light);
+  background: var(--white);
+  display: grid;
+  place-items: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.register-page-checkbox-input.checked {
+  border-color: var(--navy);
+  background: var(--navy);
+}
+
+.register-page-checkbox-text {
+  font-size: 12px;
+  color: var(--text-sub);
+  line-height: 1.5;
+  user-select: none;
+}
+
+.register-page-checkbox-text a {
+  color: var(--gold);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.register-page-checkbox-text a:hover {
+  text-decoration: underline;
+}
+
+.register-page-form-group {
+  margin-bottom: 14px;
+}
+
+.register-page-password-strength {
+  margin-top: 8px;
+}
+
+.register-page-password-bars {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.register-page-password-bar {
+  flex: 1;
+  height: 3px;
+  border-radius: 2px;
+  background: #e5ddd0;
+  transition: background 0.3s;
+}
+
+.register-page-password-bar.filled {
+  background: currentColor;
+}
+
+.register-page-password-label {
+  font-size: 11px;
+  color: #8a96a5;
+}
+
+.register-page-button-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.register-page-button {
+  padding: 16px 20px;
+  border-radius: 12px;
+  font-family: "Jost", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.2s;
+  border: none;
+}
+
+.register-page-button:hover {
+  transform: translateY(-2px);
+}
+
+.register-page-button.primary {
+  flex: 1;
+  background: var(--navy);
+  color: var(--gold-light);
+  box-shadow: 0 6px 24px rgba(13, 27, 42, 0.22);
+}
+
+.register-page-button.primary:hover:not(:disabled) {
+  box-shadow: 0 8px 28px rgba(13, 27, 42, 0.28);
+}
+
+.register-page-button.primary:disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+
+.register-page-button.secondary {
+  background: transparent;
+  border: 1.5px solid var(--border-light);
+  color: var(--text-sub);
+  white-space: nowrap;
+}
+
+.register-page-button.secondary:hover {
+  border-color: var(--navy);
+  color: var(--navy);
+}
+
+.register-page-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(201, 168, 76, 0.3);
+  border-top-color: var(--gold-light);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin: 0 auto;
+}
+
+.register-page-footer {
+  margin-top: 22px;
+  text-align: center;
+  font-size: 13px;
+  color: #8a96a5;
+}
+
+.register-page-login-link {
+  background: none;
+  border: none;
+  color: var(--gold);
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: "Jost", sans-serif;
+  padding: 0;
+}
+
+.register-page-login-link:hover {
+  text-decoration: underline;
+}
+
+.register-page-links {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.register-page-links a {
+  font-size: 11px;
+  color: #b0a898;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.register-page-links a:hover {
+  color: var(--navy);
+}
+
+.register-page-success {
+  text-align: center;
+  padding: 20px 0;
+  animation: fadeUp 0.5s ease both;
+}
+
+.register-page-success-icon {
+  width: 72px;
+  height: 72px;
+  background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 24px;
+  box-shadow: 0 8px 32px rgba(13, 27, 42, 0.2);
+}
+
+.register-page-success-title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 10px;
+}
+
+.register-page-success-text {
+  font-size: 13px;
+  color: var(--text-sub);
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.register-page-success-button {
+  width: 100%;
+  padding: 16px 20px;
+  background: var(--navy);
+  color: var(--gold-light);
+  border: none;
+  border-radius: 12px;
+  font-family: "Jost", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 6px 24px rgba(13, 27, 42, 0.22);
+  transition: transform 0.15s, box-shadow 0.2s;
+}
+
+.register-page-success-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(13, 27, 42, 0.28);
+}

@@ -1,0 +1,60 @@
+.room-form-container {
+  width: 100%;
+}
+
+.room-form-header {
+  margin-bottom: 28px;
+}
+
+.room-form-title {
+  margin-top: 12px;
+  font-size: 26px;
+  font-weight: 700;
+  font-family: 'Playfair Display', serif;
+  color: #1a1a14;
+  letter-spacing: -0.02em;
+}
+
+.room-form-subtitle {
+  font-size: 14px;
+  color: #8a8a7a;
+  margin-top: 6px;
+}
+
+.room-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.room-form-full-width {
+  grid-column: 1 / -1;
+}
+
+.room-form-actions {
+  margin-top: 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.room-form-submit {
+  padding: 11px 28px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: #1a1a14;
+  color: #f5f4ef;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.room-form-success {
+  font-size: 13px;
+  color: #4a9060;
+  font-weight: 500;
+}
