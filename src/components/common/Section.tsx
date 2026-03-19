@@ -3,11 +3,13 @@ import { Box } from "@chakra-ui/react";
 interface SectionProps {
   bg: string;
   children: React.ReactNode;
+  id?: string;
 }
 
-const Section = ({ bg, children }: SectionProps) => {
+const Section = ({ bg, children, id}: SectionProps) => {
   return (
     <Box
+      id={id}
       bg={bg}
       py={{ base: "10", md: "16" }}
       px="6"

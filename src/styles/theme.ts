@@ -1,6 +1,11 @@
-import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react"
+import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react";
 
 const config = defineConfig({
+  globalCss: {
+    html: {
+      scrollBehavior: "smooth",
+    },
+  },
   theme: {
     tokens: {
       fonts: {
@@ -28,7 +33,7 @@ const config = defineConfig({
         stone: { value: "#A3A496" },
         sand: { value: "#9B9469" },
         light: { value: "#E6E8E5" },
-        terracotta: { value: "#8E7157"  },
+        terracotta: { value: "#8E7157" },
 
         navy: { value: "#0d1b2a" },
         navyMid: { value: "#1a2e45" },
@@ -79,6 +84,6 @@ const config = defineConfig({
       },
     },
   },
-})
+});
 
-export const mySystem = createSystem(defaultConfig, config)
+export const mySystem = createSystem(defaultConfig, config);

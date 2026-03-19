@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { Box, Flex, VStack, Text } from "@chakra-ui/react";
-import DefaultButton from "../common/defaultButton";
-import Section from "../common/section";
-import ImagePlaceholder from "./imagePlaceHolder";
 import ImageSlider from "../common/ImageSlider";
+import Section from "../common/Section";
+import ImagePlaceholder from "./ImagePlaceHolder";
+import DefaultButton from "../common/DefaultButton";
 
 function SuiteMasterSection() {
   const [slide, setSlide] = useState(0);
   const total = 3;
 
   return (
-    <Section bg="sage.50">
+    <Section id="rooms" bg="sage.50">
       <Flex direction={{ base: "column", md: "row" }} gap="10" align="center">
         <VStack gap="3" flex="1">
           <ImagePlaceholder>{`Suite — foto ${slide + 1}`}</ImagePlaceholder>
@@ -43,7 +43,7 @@ function ExperienciasSection() {
   const total = 3;
 
   return (
-    <Section bg="sage.100">
+    <Section id="events" bg="sage.100">
       <Flex direction={{ base: "column", md: "row" }} gap="10" align="center">
         <VStack align="start" gap="5" flex="1">
           <Text
